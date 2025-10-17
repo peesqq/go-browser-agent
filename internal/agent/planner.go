@@ -45,9 +45,6 @@ func (c *Core) Run(ctx context.Context, goal string, maxTime time.Duration) erro
 Никакого другого текста внутри блока.
 Если требуются рискованные действия (удаление/оплата/отправка) — сначала спроси подтверждение в ответе вне блока.`
 
-	// ...
-	// тут продолжается остальной код функции
-
 	// Первое наблюдение
 	obs, _ := c.tools.Observe(ctx)
 	ctxShort := SummarizeForLLM(obs)
@@ -68,7 +65,6 @@ func (c *Core) Run(ctx context.Context, goal string, maxTime time.Duration) erro
 
 		action, payload := parseAction(out)
 		if action == "" {
-			// модель дала текст без блока — попросим явно дать действие
 			msgs = append(msgs, llm.Message{Role: "assistant", Content: out})
 			msgs = append(msgs, llm.Message{Role: "user", Content: "Пожалуйста, выдай следующий шаг строго в блоке ```action```."})
 			continue
